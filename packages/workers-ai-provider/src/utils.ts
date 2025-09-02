@@ -1,4 +1,4 @@
-import type { LanguageModelV1, LanguageModelV1FunctionToolCall } from "@ai-sdk/provider";
+import type { LanguageModelV2, LanguageModelV2FunctionTool } from "@ai-sdk/provider";
 
 /**
  * General AI run interface with overloads to handle distinct return types.
@@ -127,7 +127,7 @@ export function createRun(config: CreateRunConfig): AiRun {
 }
 
 export function prepareToolsAndToolChoice(
-	mode: Parameters<LanguageModelV1["doGenerate"]>[0]["mode"] & {
+	mode: Parameters<LanguageModelV2["doGenerate"]>[0]["mode"] & {
 		type: "regular";
 	},
 ) {
@@ -220,7 +220,7 @@ function mergePartialToolCalls(partialCalls: any[]) {
 	return Object.values(mergedCallsByIndex);
 }
 
-function processToolCall(toolCall: any): LanguageModelV1FunctionToolCall {
+function processToolCall(toolCall: any): LanguageModelV2FunctionTool {
 	// Check for OpenAI format tool calls first
 	if (toolCall.function && toolCall.id) {
 		return {
@@ -244,7 +244,7 @@ function processToolCall(toolCall: any): LanguageModelV1FunctionToolCall {
 	};
 }
 
-export function processToolCalls(output: any): LanguageModelV1FunctionToolCall[] {
+export function processToolCalls(output: any): LanguageModelV2FunctionTool[] {
 	if (output.tool_calls && Array.isArray(output.tool_calls)) {
 		return output.tool_calls.map((toolCall: any) => {
 			const processedToolCall = processToolCall(toolCall);

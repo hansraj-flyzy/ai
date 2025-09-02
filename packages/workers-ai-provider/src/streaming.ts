@@ -1,4 +1,4 @@
-import type { LanguageModelV1StreamPart } from "@ai-sdk/provider";
+import type { LanguageModelV2StreamPart } from "@ai-sdk/provider";
 import { events } from "fetch-event-stream";
 import { mapWorkersAIUsage } from "./map-workersai-usage";
 import { processPartialToolCalls } from "./utils";
@@ -8,7 +8,7 @@ export function getMappedStream(response: Response) {
 	let usage = { completionTokens: 0, promptTokens: 0 };
 	const partialToolCalls: any[] = [];
 
-	return new ReadableStream<LanguageModelV1StreamPart>({
+	return new ReadableStream<LanguageModelV2StreamPart>({
 		async start(controller) {
 			for await (const event of chunkEvent) {
 				if (!event.data) {

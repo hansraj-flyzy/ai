@@ -1,19 +1,19 @@
-import type { LanguageModelV1Prompt, LanguageModelV1ProviderMetadata } from "@ai-sdk/provider";
+import type { LanguageModelV2Prompt, SharedV2ProviderMetadata } from "@ai-sdk/provider";
 import type { WorkersAIChatPrompt } from "./workersai-chat-prompt";
 
-export function convertToWorkersAIChatMessages(prompt: LanguageModelV1Prompt): {
+export function convertToWorkersAIChatMessages(prompt: LanguageModelV2Prompt): {
 	messages: WorkersAIChatPrompt;
 	images: {
 		mimeType: string | undefined;
 		image: Uint8Array;
-		providerMetadata: LanguageModelV1ProviderMetadata | undefined;
+		providerMetadata: SharedV2ProviderMetadata | undefined;
 	}[];
 } {
 	const messages: WorkersAIChatPrompt = [];
 	const images: {
 		mimeType: string | undefined;
 		image: Uint8Array;
-		providerMetadata: LanguageModelV1ProviderMetadata | undefined;
+		providerMetadata: SharedV2ProviderMetadata | undefined;
 	}[] = [];
 
 	for (const { role, content } of prompt) {

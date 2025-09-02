@@ -1,7 +1,7 @@
 import {
-	type LanguageModelV1,
-	type LanguageModelV1CallWarning,
-	type LanguageModelV1StreamPart,
+	type LanguageModelV2,
+	type LanguageModelV2CallWarning,
+	type LanguageModelV2StreamPart,
 	UnsupportedFunctionalityError,
 } from "@ai-sdk/provider";
 import { convertToWorkersAIChatMessages } from "./convert-to-workersai-chat-messages";
@@ -23,8 +23,8 @@ type WorkersAIChatConfig = {
 	gateway?: GatewayOptions;
 };
 
-export class WorkersAIChatLanguageModel implements LanguageModelV1 {
-	readonly specificationVersion = "v1";
+export class WorkersAIChatLanguageModel implements LanguageModelV2 {
+	readonly specificationVersion = "v2";
 	readonly defaultObjectGenerationMode = "json";
 
 	readonly modelId: TextGenerationModels;
@@ -54,10 +54,10 @@ export class WorkersAIChatLanguageModel implements LanguageModelV1 {
 		frequencyPenalty,
 		presencePenalty,
 		seed,
-	}: Parameters<LanguageModelV1["doGenerate"]>[0]) {
+	}: Parameters<LanguageModelV2["doGenerate"]>[0]) {
 		const type = mode.type;
 
-		const warnings: LanguageModelV1CallWarning[] = [];
+		const warnings: LanguageModelV2CallWarning[] = [];
 
 		if (frequencyPenalty != null) {
 			warnings.push({
@@ -135,8 +135,8 @@ export class WorkersAIChatLanguageModel implements LanguageModelV1 {
 	}
 
 	async doGenerate(
-		options: Parameters<LanguageModelV1["doGenerate"]>[0],
-	): Promise<Awaited<ReturnType<LanguageModelV1["doGenerate"]>>> {
+		options: Parameters<LanguageModelV2["doGenerate"]>[0],
+	): Promise<Awaited<ReturnType<LanguageModelV2["doGenerate"]>>> {
 		const { args, warnings } = this.getArgs(options);
 
 		// biome-ignore lint/correctness/noUnusedVariables: this needs to be destructured
@@ -187,8 +187,8 @@ export class WorkersAIChatLanguageModel implements LanguageModelV1 {
 	}
 
 	async doStream(
-		options: Parameters<LanguageModelV1["doStream"]>[0],
-	): Promise<Awaited<ReturnType<LanguageModelV1["doStream"]>>> {
+		options: Parameters<LanguageModelV2["doStream"]>[0],
+	): Promise<Awaited<ReturnType<LanguageModelV2["doStream"]>>> {
 		const { args, warnings } = this.getArgs(options);
 
 		// Extract image from messages if present
@@ -206,7 +206,7 @@ export class WorkersAIChatLanguageModel implements LanguageModelV1 {
 
 			return {
 				rawCall: { rawPrompt: messages, rawSettings: args },
-				stream: new ReadableStream<LanguageModelV1StreamPart>({
+				stream: new ReadableStream<LanguageModelV2StreamPart>({
 					async start(controller) {
 						if (response.text) {
 							controller.enqueue({

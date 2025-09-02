@@ -1,10 +1,10 @@
-import type { ImageModelV1, ImageModelV1CallWarning } from "@ai-sdk/provider";
+import type { ImageModelV2, ImageModelV2CallWarning } from "@ai-sdk/provider";
 import type { WorkersAIImageConfig } from "./workersai-image-config";
 import type { WorkersAIImageSettings } from "./workersai-image-settings";
 import type { ImageGenerationModels } from "./workersai-models";
 
-export class WorkersAIImageModel implements ImageModelV1 {
-	readonly specificationVersion = "v1";
+export class WorkersAIImageModel implements ImageModelV2 {
+	readonly specificationVersion = "v2";
 
 	get maxImagesPerCall(): number {
 		return this.settings.maxImagesPerCall ?? 1;

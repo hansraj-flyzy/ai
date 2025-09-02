@@ -1,6 +1,6 @@
 import {
-	type LanguageModelV1,
-	type LanguageModelV1CallWarning,
+	type LanguageModelV2,
+	type LanguageModelV2CallWarning,
 	UnsupportedFunctionalityError,
 } from "@ai-sdk/provider";
 
@@ -17,8 +17,8 @@ type AutoRAGChatConfig = {
 	gateway?: GatewayOptions;
 };
 
-export class AutoRAGChatLanguageModel implements LanguageModelV1 {
-	readonly specificationVersion = "v1";
+export class AutoRAGChatLanguageModel implements LanguageModelV2 {
+	readonly specificationVersion = "v2";
 	readonly defaultObjectGenerationMode = "json";
 
 	readonly modelId: TextGenerationModels;
@@ -45,10 +45,10 @@ export class AutoRAGChatLanguageModel implements LanguageModelV1 {
 		prompt,
 		frequencyPenalty,
 		presencePenalty,
-	}: Parameters<LanguageModelV1["doGenerate"]>[0]) {
+	}: Parameters<LanguageModelV2["doGenerate"]>[0]) {
 		const type = mode.type;
 
-		const warnings: LanguageModelV1CallWarning[] = [];
+		const warnings: LanguageModelV2CallWarning[] = [];
 
 		if (frequencyPenalty != null) {
 			warnings.push({
@@ -120,8 +120,8 @@ export class AutoRAGChatLanguageModel implements LanguageModelV1 {
 	}
 
 	async doGenerate(
-		options: Parameters<LanguageModelV1["doGenerate"]>[0],
-	): Promise<Awaited<ReturnType<LanguageModelV1["doGenerate"]>>> {
+		options: Parameters<LanguageModelV2["doGenerate"]>[0],
+	): Promise<Awaited<ReturnType<LanguageModelV2["doGenerate"]>>> {
 		const { args, warnings } = this.getArgs(options);
 
 		const { messages } = convertToWorkersAIChatMessages(options.prompt);
@@ -149,8 +149,8 @@ export class AutoRAGChatLanguageModel implements LanguageModelV1 {
 	}
 
 	async doStream(
-		options: Parameters<LanguageModelV1["doStream"]>[0],
-	): Promise<Awaited<ReturnType<LanguageModelV1["doStream"]>>> {
+		options: Parameters<LanguageModelV2["doStream"]>[0],
+	): Promise<Awaited<ReturnType<LanguageModelV2["doStream"]>>> {
 		const { args, warnings } = this.getArgs(options);
 
 		const { messages } = convertToWorkersAIChatMessages(options.prompt);

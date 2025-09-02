@@ -1,4 +1,4 @@
-import { type EmbeddingModelV1, TooManyEmbeddingValuesForCallError } from "@ai-sdk/provider";
+import { type EmbeddingModelV2, TooManyEmbeddingValuesForCallError } from "@ai-sdk/provider";
 import type { StringLike } from "./utils";
 import type { EmbeddingModels } from "./workersai-models";
 
@@ -19,12 +19,12 @@ export type WorkersAIEmbeddingSettings = {
 	[key: string]: StringLike;
 };
 
-export class WorkersAIEmbeddingModel implements EmbeddingModelV1<string> {
+export class WorkersAIEmbeddingModel implements EmbeddingModelV2<string> {
 	/**
 	 * Semantic version of the {@link EmbeddingModelV1} specification implemented
 	 * by this class. It never changes.
 	 */
-	readonly specificationVersion = "v1";
+	readonly specificationVersion = "v2";
 	readonly modelId: EmbeddingModels;
 	private readonly config: WorkersAIEmbeddingConfig;
 	private readonly settings: WorkersAIEmbeddingSettings;
